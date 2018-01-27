@@ -31,7 +31,7 @@ class Post
     /**
      * @var string
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string")
      */
     private $description;
 
@@ -79,7 +79,7 @@ class Post
     /**
      * @return string
      */
-    public function getDescription(): string
+    public function getDescription(): ? string
     {
         return $this->description;
     }
@@ -92,6 +92,14 @@ class Post
     {
         $this->description = $description;
         return $this;
+    }
+
+    public function getShorts(): ?string
+    {
+        $paragraphs = explode("\n", $this->description, 2);
+        list($first) = $paragraphs;
+
+        return reset($paragraphs);
     }
 
 

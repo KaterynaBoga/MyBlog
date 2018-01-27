@@ -12,17 +12,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class BlogController extends Controller
 {
     /**
-     * @Route("/", name="blog_list")
+     * @Route("/", name="homepage")
      */
     public function listBlog()
     {
         $posts = $this->getDoctrine()
             ->getRepository(Post::class)
-            ->findBy(
-                [],
-                ['postedAt' => 'DESC']
-            );
-
+            ->findBy([],['postedAt' => 'DESC']);
 
         return $this->render('blog/list.html.twig', ['posts' => $posts]);
     }
@@ -49,15 +45,38 @@ class BlogController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($post);
             $em->flush();
-            $this->addFlash('info', 'Изменен пост');
-
 
             return $this->redirectToRoute('post_show', ['id' => $post->getId()]);
-
         }
 
         return $this->render('blog/form.html.twig', [
             'form' => $form->createView(),
+            'post' =>$post,
+        ]);
+
+
+    }
+
+    /**
+     * @Route("/edit/{id}", name="edit_post")
+     *
+     * @param Request $request
+     */
+    public function editPost(Post $post, Request $request, EntityManagerInterface $em)
+    {
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($post);
+            $em->flush();
+
+            return $this->redirectToRoute('post_show', ['id' => $post->getId()]);
+        }
+
+        return $this->render('blog/edit.html.twig', [
+            'form' => $form->createView(),
+            'post' =>$post,
         ]);
 
 

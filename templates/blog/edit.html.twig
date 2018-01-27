@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
     <div class="container-fluid">
         {% for message in app.flashes('info') %}
             <p class="bg-success">{{ message }}</p>
@@ -9,14 +10,14 @@
         <div class="row">
             <div class="col-xs-3 col-md-3"></div>
             <div class="col-xs-9 col-md-6">
-                <h3>Додати новий пост</h3>
+                <h3>Редагувати пост </h3>
                 {{ form_start(form) }}
                 {{ form_widget(form) }}
+                <a href="{{ '/edit/{id}' }}">
+                    <button type="submit" class="btn btn-default"> Зберегти зміни </button>
+                </a>
                 <a href="{{ '/post/{id}' }}">
-                    <button type="submit" class="btn btn-default">
-                        <span class="glyphicon glyphicon-ok"></span>
-                        Зберегти новий пост
-                    </button>
+                    <button type="submit" class="btn btn-default"> Повернутись к перегляду поста </button>
                 </a>
                 {{ form_end(form) }}
                 <p style="margin-top: 25px">
@@ -32,6 +33,6 @@
 {% endblock %}
 
 {% block title %}
-    {{  'Додати' }}
+    {{ 'Редагувати'}} {{  post.heading }}
 {% endblock %}
 

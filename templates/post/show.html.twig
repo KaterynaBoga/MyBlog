@@ -1,25 +1,28 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    MyBlog
+    {{ post.heading }}
 {% endblock %}
 
 {% block body %}
-
     <div class="container">
-        <div class="col-xs-3 col-md-3">
-
-        </div>
+        <div class="col-xs-3 col-md-3"></div>
         <div class=".col-xs-9 col-md-9">
-            <p>{{ post.id }}</p>
+            <h4>Новини</h4>
+            <h3>{{ post.heading }}</h3>
             <p>{{ post.postedAt|date }}</p>
             <p>{{ post.description }}</p>
             <p>
-                <a href= "{{ path('post_show', {'id':post.id}) }}" class="btn btn-info" role="button">Читать далее</a>
+                <a href= "{{ path('edit_post', {'id':post.id}) }}"
+                   class="btn btn-default " role="button">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    Редагувати
+                </a>
             </p>
-
-
-
+            <p>
+                <a href= "{{ path('homepage') }}" class="btn btn-default" role="button">
+                    <span class="glyphicon glyphicon-home"></span>  Повернутись на головну</a>
+            </p>
         </div>
     </div>
 {% endblock %}
