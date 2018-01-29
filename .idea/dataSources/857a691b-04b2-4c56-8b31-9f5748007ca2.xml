@@ -972,51 +972,99 @@
       <Charset>utf8mb4</Charset>
       <DefaultForCharset>0</DefaultForCharset>
     </collation>
-    <table id="246" parent="5" name="migration_versions">
+    <table id="246" parent="5" name="commentary">
       <Engine>InnoDB</Engine>
       <Collation>utf8_unicode_ci</Collation>
     </table>
-    <table id="247" parent="5" name="post">
+    <table id="247" parent="5" name="migration_versions">
       <Engine>InnoDB</Engine>
       <Collation>utf8_unicode_ci</Collation>
     </table>
-    <column id="248" parent="246" name="version">
-      <Position>1</Position>
-      <DataType>varchar(255)|0</DataType>
-      <NotNull>1</NotNull>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <key id="249" parent="246" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>version</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <column id="250" parent="247" name="id">
+    <table id="248" parent="5" name="post">
+      <Engine>InnoDB</Engine>
+      <Collation>utf8_unicode_ci</Collation>
+    </table>
+    <column id="249" parent="246" name="id">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="251" parent="247" name="published_at">
+    <column id="250" parent="246" name="post_id">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="251" parent="246" name="published_at">
+      <Position>3</Position>
+      <DataType>datetime|0</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="252" parent="246" name="name">
+      <Position>4</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="253" parent="246" name="message">
+      <Position>5</Position>
+      <DataType>longtext|0</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="254" parent="246" name="IDX_1CAC12CA4B89032C">
+      <ColNames>post_id</ColNames>
+    </index>
+    <key id="255" parent="246" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="256" parent="246" name="FK_1CAC12CA4B89032C">
+      <ColNames>post_id</ColNames>
+      <RefSchemaName>my_blog</RefSchemaName>
+      <RefTableName>post</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="257" parent="247" name="version">
+      <Position>1</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="258" parent="247" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>version</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="259" parent="248" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="260" parent="248" name="published_at">
       <Position>2</Position>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="252" parent="247" name="heading">
+    <column id="261" parent="248" name="heading">
       <Position>3</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="253" parent="247" name="description">
+    <column id="262" parent="248" name="description">
       <Position>4</Position>
       <DataType>longtext|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="254" parent="247" name="PRIMARY">
+    <key id="263" parent="248" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>

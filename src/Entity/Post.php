@@ -35,6 +35,19 @@ class Post
      */
     private $description;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Commentary", mappedBy="post")
+     * @ORM\OrderBy({"name" = "DESC"})
+     *
+     */
+    private $comments;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
+
+
     public function getId()
     {
         return $this->id;
@@ -99,7 +112,25 @@ class Post
         $paragraphs = explode("\n", $this->description, 2);
         list($first) = $paragraphs;
 
-        return reset($paragraphs);
+        return $first;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param mixed $comments
+     * @return Post
+     */
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
+        return $this;
     }
 
 

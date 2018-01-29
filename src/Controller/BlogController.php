@@ -2,7 +2,9 @@
 // src/Controller/BlogController.php
 namespace App\Controller;
 
+use App\Entity\Commentary;
 use App\Entity\Post;
+use App\Form\CommentType;
 use App\Form\PostType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -18,7 +20,7 @@ class BlogController extends Controller
     {
         $posts = $this->getDoctrine()
             ->getRepository(Post::class)
-            ->findBy([],['postedAt' => 'DESC']);
+            ->findBy([], ['postedAt' => 'DESC']);
 
         return $this->render('blog/list.html.twig', ['posts' => $posts]);
     }
@@ -26,9 +28,26 @@ class BlogController extends Controller
     /**
      * @Route("/post/{id}", name="post_show")
      */
-    public function show(Post $post)
+    public function show(Post $post, Request $request, EntityManagerInterface $em)
+
     {
-        return $this->render('post/show.html.twig', ['post' => $post]);
+        $commentary = new Commentary();
+        $commentary->setPost($post);
+        $form = $this->createForm(CommentType::class, $commentary);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($commentary);
+            $em->flush();
+
+            return $this->redirectToRoute('post_show', ['id' => $post->getId()]);
+        }
+
+
+        return $this->render('post/show.html.twig', [
+            'form' => $form->createView(),
+            'post' => $post,
+        ]);
     }
 
     /**
@@ -36,7 +55,8 @@ class BlogController extends Controller
      *
      * @param Request $request
      */
-    public function create(Request $request, EntityManagerInterface $em)
+    public
+    function create(Request $request, EntityManagerInterface $em)
     {
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
@@ -51,10 +71,8 @@ class BlogController extends Controller
 
         return $this->render('blog/form.html.twig', [
             'form' => $form->createView(),
-            'post' =>$post,
+            'post' => $post,
         ]);
-
-
     }
 
     /**
@@ -62,7 +80,8 @@ class BlogController extends Controller
      *
      * @param Request $request
      */
-    public function editPost(Post $post, Request $request, EntityManagerInterface $em)
+    public
+    function editPost(Post $post, Request $request, EntityManagerInterface $em)
     {
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
@@ -76,9 +95,8 @@ class BlogController extends Controller
 
         return $this->render('blog/edit.html.twig', [
             'form' => $form->createView(),
-            'post' =>$post,
+            'post' => $post,
         ]);
-
 
     }
 
